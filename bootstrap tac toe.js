@@ -30,13 +30,37 @@ function computerTurn() {
 */
 // checks for win condition and displays alert
 function gameOver() {
+	//initialize diag counters 
+	var diag1X = 0;
+	var diag1O = 0;
+	var diag2X = 0;
+	var diag2O = 0;
 	// row and column checks
 	for (var i=0; i<3; i++){
 		//counter initialize
 		var rowX = 0;
 		var rowO = 0;
 		var colX = 0;		
-		var colO = 0;
+		var colO = 0;		
+		//check diagonals
+		if (gridArray[i][i] == "X"){
+			diag1X++;			
+		}
+		if (gridArray[i][i] == "O"){
+			diag1O++;
+		}
+		if (gridArray[i][(2-i)] == "X"){
+			diag2X++;
+		}
+		if (gridArray[i][(2-i)] == "O"){
+			diag2O++;
+		}
+		else if (diag1X == 3 || diag2X == 3) {
+			alert("X wins!!");
+		}
+		else if (diag1O == 3 || diag2O == 3) {
+			alert("O wins!!");
+		}
 		// count and check rows and columns for win
 		for (var j=0; j<3; j++){
 			if (gridArray[i][j] == "X"){
@@ -57,35 +81,8 @@ function gameOver() {
 			else if (rowO == 3 || colO == 3){
 				alert("O wins!!");
 			}
-		}
+		}		
 	}
-	// check diagonals
-	//initialize diag counters 
-	var diag1X = 0;
-	var diag1O = 0;
-	var diag2X = 0;
-	var diag2O = 0;	
-	for (var i=0; i<3; i++){
-		if (gridArray[i][i] == "X"){
-			diag1X++;			
-		}
-		if (gridArray[i][i] == "O"){
-			diag1O++;
-		}
-		if (gridArray[i][(2-i)] == "X"){
-			diag2X++;
-		}
-		if (gridArray[i][(2-i)] == "O"){
-			diag2O++;
-		}
-		else if (diag1X == 3 || diag2X == 3) {
-			alert("X wins!!");
-		}
-		else if (diag1O == 3 || diag2O == 3) {
-			alert("O wins!!");
-		}
-	}
-
 }
 
 function xIndex(squareDiv) {
