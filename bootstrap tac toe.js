@@ -2,32 +2,71 @@
 This jQuery builds and runs a simple tic tac toe game for bootstrap html and css 
 */
 var gridArray = [[0,0,0],[0,0,0],[0,0,0]];
-/*
-function computerTurn() {
-	var posMoves = new Array();
-	for (var i=0, i<2, i++){
-		var countBlank = 0;
-		var countX = 0;
-		var countO = 0;		
-		for (var j=0, j<2, j++){
-			if (gridArray[i][j] == 0){
-				countBlank++;
 
+function computerTurn() {
+	//check for possible wins/blocks HIGH PRIORITY	
+	//check for possible wins/blocks in row/column
+	for (var i=0; i<3; i++){
+		//initialize counter arrays
+		if (i == 0){
+		var diag1 = [];
+		var diag2 = [];
+		}
+		var check1 = [];
+		var check2 = [];
+		//fill diag arrays with grid variables
+		diag1[i] = gridArray[i][i];			
+		diag2[i] = gridArray[i][i];
+		//check for possible wins/blocks in diag
+		if (i == 2) {
+			if (diag1 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
+				computerMove(diag1.indexOf(0), diag1.indexOf(0))
+				return;
 			}
-			if (gridArray[i][j] == "X"){
-				countX++;
+			if (diag2 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
+				computerMove(diag2.indexOf(0), diag2.indexOf(0))
+				return;
 			}
-			if (gridArray[i][j] == "O"){
-				countO++;
+			if (diag1 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
+				computerMove(diag1.indexOf(0), diag1.indexOf(0))
+				return;
+			}
+			if (diag2 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
+				computerMove(diag2.indexOf(0), diag2.indexOf(0))
+				return;
 			}
 		}
-		if (countO == 2 && countBlank == 1){
-			document.getElementById("square_"+i+"_"+j).classList.remove("blank");
-			document.getElementById("square_"+i+"_"+j).classList.add("O");
+				
+		for (var j=0; j<3; j++){
+			check1[j] = gridArray[i][j];
+			check2[j] = gridArray[j][i];
+			if (j == 2){
+				if (check1 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
+					computerMove(check1.indexOf(0), check1.indexOf(0))
+					return;
+				}
+				if (check2 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
+					computerMove(check2.indexOf(0), check2.indexOf(0))
+					return;
+				}
+				if (check1 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
+					computerMove(check1.indexOf(0), check1.indexOf(0))
+					return;
+				}
+				if (check2 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
+					computerMove(check2.indexOf(0), check2.indexOf(0))
+					return;
+				}
+			}		
 		}
 	}
+	//check for moves if no win/block
 }
-*/
+// places an O in the grid array and changes class to .O for corresponding div
+function computerMove(i,j) {
+	gridArray[i][j] = "O";
+
+}
 // checks for win condition and displays alert
 function gameOver() {
 	//initialize diag counters 
@@ -103,13 +142,13 @@ $(document).ready(function(){
 
 	for (var i=0; i<3; i++){
 		var rowDiv = document.createElement("div");
-		rowDiv.classList.add("row-fluid");
+		rowDiv.classList.add("row");
 		
 		for (var j=0; j<3; j++){
 			var gridDiv = document.createElement("div");
 			var newContent = document.createTextNode( i + " " + j );
 			gridDiv.id = "square_" + i +"_"+ j;
-			gridDiv.classList.add("span4");
+			gridDiv.classList.add("col-lg-4");
 			gridDiv.classList.add("blank");
 			gridDiv.appendChild(newContent);
 			rowDiv.appendChild(gridDiv);
@@ -117,8 +156,7 @@ $(document).ready(function(){
 		
 		document.getElementById("playarea").appendChild(rowDiv);
 	}
-	console.log(gridArray);
-
+	
 	$(".blank").click(function(){
 		this.classList.remove("blank");
 		this.classList.add("X");
