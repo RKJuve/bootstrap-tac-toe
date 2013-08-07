@@ -1,32 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+	<head>
 	<meta charset="utf-8">
 	<title>Bootstrap-Tac-Toe!</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="A simple tic-tac-toe game coded in Javascript and made shiny with Boostrap.">
 	<meta name="author" content="Ryan Juve">
 
-	<!-- Le styles -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-
-	<!-- Le fav and touch icons -->
-	<link rel="shortcut icon" href="http://twitter.github.com/bootstrap/assets/images/favicon.ico">
-	<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="http://twitter.github.com/bootstrap/assets/images/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="http://twitter.github.com/bootstrap/assets/images/apple-touch-icon-114x114.png">
-</head>
-<body>
-
 	<style type="text/css">
 		body { 
-			padding-top: 60px;
+			padding-top: 80px;
 			padding-bottom: 40px;
+		 }
+		 footer {
+		 	padding-top: 40px;
 		 }
 		.blank {
 			height:150px;
@@ -37,13 +30,26 @@
 		}
 		.O {
 			height:150px;
+			background-color: blue;
 		}	
 	</style>
 
-	<div class="row">
-		<div id="playarea" class="col-lg-8 col-offset2" style="border: 10px solid black;"></div>
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top">
+		  <div class="container">
+		    <a class="navbar-brand" href="#">Bootstrap-Tac-
+		    	Toe</a>
+		  </div>
 		</div>
-		<!-- Example row of columns -->
+
+	<div class="container">
+		<div class="row">
+			<div id="playarea" class="col-sm-8 col-sm-offset-2" style="border: 10px solid black;">
+			</div>
+		</div>
+	</div>
+
 		<footer>
 			<p>Ryan & Taylor Juve   &nbsp&nbsp&nbsp July 2013</p>
 		</footer>
@@ -53,7 +59,7 @@
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>	
-	<script type="text/javascript" src="file://localhost\C:\Users\Ryan\Documents\GitHub\webstuff\bootstrap tac toe.js"></script>
-</body>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>	
+	<script type="text/javascript" src="bootstrap tac toe.js"></script>
+	</body>
 </html>

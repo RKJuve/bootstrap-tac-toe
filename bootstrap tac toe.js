@@ -2,6 +2,23 @@
 This jQuery builds and runs a simple tic tac toe game for bootstrap html and css 
 */
 var gridArray = [[0,0,0],[0,0,0],[0,0,0]];
+var highPriArray = [[0,"O","O"],["O",0,"O"],["O","O",0],[0,"X","X"],["X",0,"X"],["X","X",0]];
+
+function compare(a,b) {
+	if (a === b) {
+		return true;
+	}
+	if (a == null || b == null) {
+		return false;
+	}
+  if (a.length != b.length) {
+  	return false;
+  }
+  for (var i=0; i<a.length; i++) {
+  	if (a[i] !== b[i]) return false;
+  }
+ 	return true;
+}
 
 function computerTurn() {
 	//check for possible wins/blocks HIGH PRIORITY	
@@ -16,24 +33,19 @@ function computerTurn() {
 		var check2 = [];
 		//fill diag arrays with grid variables
 		diag1[i] = gridArray[i][i];			
-		diag2[i] = gridArray[i][i];
+		diag2[i] = gridArray[2-i][i];
 		//check for possible wins/blocks in diag
 		if (i == 2) {
-			if (diag1 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
-				computerMove(diag1.indexOf(0), diag1.indexOf(0))
+			var array = [];
+			for (var k=0; k<highPriArray.length; k++){					
+				array = highPriArray[k];
+				if (compare(diag1,array)){	
+				computerMove(diag1.indexOf(0), diag1.indexOf(0));
 				return;
-			}
-			if (diag2 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
-				computerMove(diag2.indexOf(0), diag2.indexOf(0))
-				return;
-			}
-			if (diag1 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
-				computerMove(diag1.indexOf(0), diag1.indexOf(0))
-				return;
-			}
-			if (diag2 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
-				computerMove(diag2.indexOf(0), diag2.indexOf(0))
-				return;
+				} else if (compare(diag2,array)){
+					computerMove((2-diag2.indexOf(0)), diag2.indexOf(0));
+					return;
+				}
 			}
 		}
 				
@@ -41,31 +53,30 @@ function computerTurn() {
 			check1[j] = gridArray[i][j];
 			check2[j] = gridArray[j][i];
 			if (j == 2){
-				if (check1 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
-					computerMove(check1.indexOf(0), check1.indexOf(0))
+				var array = [];
+				for (var k=0; k<highPriArray.length; k++){					
+					array = highPriArray[k];
+					if (compare(check1,array)){	
+					computerMove(i, check1.indexOf(0));
 					return;
-				}
-				if (check2 = [0,"O","O"] || ["O",0,"O"] || ["O","O",0]){
-					computerMove(check2.indexOf(0), check2.indexOf(0))
-					return;
-				}
-				if (check1 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
-					computerMove(check1.indexOf(0), check1.indexOf(0))
-					return;
-				}
-				if (check2 = [0,"X","X"] || ["X",0,"X"] || ["X","X",0]){
-					computerMove(check2.indexOf(0), check2.indexOf(0))
-					return;
+					} else if (compare(check2,array)){
+						computerMove(check2.indexOf(0), i);
+						return;
+					}
 				}
 			}		
 		}
 	}
+	return;
 	//check for moves if no win/block
 }
 // places an O in the grid array and changes class to .O for corresponding div
 function computerMove(i,j) {
 	gridArray[i][j] = "O";
-
+	var divName = "square_"+i+"_"+j;
+	console.log(divName);
+	document.getElementById(divName).classList.remove("blank");
+	document.getElementById(divName).classList.add("O");
 }
 // checks for win condition and displays alert
 function gameOver() {
@@ -139,7 +150,6 @@ function yIndex(squareDiv) {
 
 $(document).ready(function(){
 	// Create div Object and add id and class
-
 	for (var i=0; i<3; i++){
 		var rowDiv = document.createElement("div");
 		rowDiv.classList.add("row");
@@ -149,6 +159,7 @@ $(document).ready(function(){
 			var newContent = document.createTextNode( i + " " + j );
 			gridDiv.id = "square_" + i +"_"+ j;
 			gridDiv.classList.add("col-lg-4");
+			gridDiv.classList.add("col-sm-4");
 			gridDiv.classList.add("blank");
 			gridDiv.appendChild(newContent);
 			rowDiv.appendChild(gridDiv);
@@ -163,5 +174,6 @@ $(document).ready(function(){
 		gridArray[xIndex(this.id)][yIndex(this.id)] = "X";
 		console.log(gridArray);
 		gameOver();
+		computerTurn();
 	}) 
 });
