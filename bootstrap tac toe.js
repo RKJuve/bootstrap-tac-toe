@@ -21,8 +21,7 @@ function compare(a,b) {
 }
 
 function computerTurn() {
-	//check for possible wins/blocks HIGH PRIORITY	
-	//check for possible wins/blocks in row/column
+	//check for possible wins/blocks HIGH PRIORITY
 	for (var i=0; i<3; i++){
 		//initialize counter arrays
 		if (i == 0){
@@ -33,22 +32,22 @@ function computerTurn() {
 		var check2 = [];
 		//fill diag arrays with grid variables
 		diag1[i] = gridArray[i][i];			
-		diag2[i] = gridArray[2-i][i];
-		//check for possible wins/blocks in diag
+		diag2[i] = gridArray[i][2-i];
+		//check for wins/blocks in diag
 		if (i == 2) {
 			var array = [];
 			for (var k=0; k<highPriArray.length; k++){					
 				array = highPriArray[k];
 				if (compare(diag1,array)){	
-				computerMove(diag1.indexOf(0), diag1.indexOf(0));
-				return;
+					computerMove(diag1.indexOf(0), diag1.indexOf(0));
+					return;
 				} else if (compare(diag2,array)){
-					computerMove((2-diag2.indexOf(0)), diag2.indexOf(0));
+					computerMove(diag2.indexOf(0), (2-diag2.indexOf(0)));
 					return;
 				}
 			}
 		}
-				
+		// check for wins/blocks in rows and columns		
 		for (var j=0; j<3; j++){
 			check1[j] = gridArray[i][j];
 			check2[j] = gridArray[j][i];
@@ -57,8 +56,8 @@ function computerTurn() {
 				for (var k=0; k<highPriArray.length; k++){					
 					array = highPriArray[k];
 					if (compare(check1,array)){	
-					computerMove(i, check1.indexOf(0));
-					return;
+						computerMove(i, check1.indexOf(0));
+						return;
 					} else if (compare(check2,array)){
 						computerMove(check2.indexOf(0), i);
 						return;
@@ -67,8 +66,22 @@ function computerTurn() {
 			}		
 		}
 	}
-	return;
-	//check for moves if no win/block
+	//play in the middle if available
+	if (gridArray[1][1] == 0){
+		computerMove(1,1);
+		return;
+	}
+	// LOW PRIORITY MOVE - plays around human player. currently assumes human goes first
+	var played = true;
+  do {
+		var a = Math.round(2*Math.random())
+		var b = Math.round(2*Math.random())
+		if (gridArray[a][b] == 0){
+			computerMove(a,b);
+			played = false;
+		}
+	}	while (played);
+	return;	
 }
 // places an O in the grid array and changes class to .O for corresponding div
 function computerMove(i,j) {
@@ -79,6 +92,10 @@ function computerMove(i,j) {
 	document.getElementById(divName).classList.add("O");
 }
 // checks for win condition and displays alert
+
+//tay - this is where the problem is, there seems to be some issue when it trys to do logic on the
+//diag and row/col arrays (on last loops of i and j).  im pretty sure all the loops are running from console.logging things
+//but the stuff dont work!
 function gameOver() {
 	//initialize diag counters 
 	var diag1X = 0;
@@ -87,6 +104,7 @@ function gameOver() {
 	var diag2O = 0;
 	// row and column checks
 	for (var i=0; i<3; i++){
+		//console.log(i);
 		//counter initialize
 		var rowX = 0;
 		var rowO = 0;
@@ -95,43 +113,38 @@ function gameOver() {
 		//check diagonals
 		if (gridArray[i][i] == "X"){
 			diag1X++;			
-		}
-		if (gridArray[i][i] == "O"){
+		} else if (gridArray[i][i] == "O"){
 			diag1O++;
-		}
-		if (gridArray[i][(2-i)] == "X"){
+		}	if (gridArray[i][(2-i)] == "X"){
 			diag2X++;
-		}
-		if (gridArray[i][(2-i)] == "O"){
+		}	else if (gridArray[i][(2-i)] == "O"){
 			diag2O++;
-		}
-		else if (diag1X == 3 || diag2X == 3) {
-			alert("X wins!!");
-		}
-		else if (diag1O == 3 || diag2O == 3) {
-			alert("O wins!!");
+		}	else if (i == 2){
+			if (diag1X == 3 || diag2X == 3) {
+				alert("X wins!!");
+			}
+			else if (diag1O == 3 || diag2O == 3) {
+				alert("O wins!!");
+			}
 		}
 		// count and check rows and columns for win
 		for (var j=0; j<3; j++){
 			if (gridArray[i][j] == "X"){
 				rowX++;				
-			}
-			if (gridArray[i][j] == "O"){
+			}	else if (gridArray[i][j] == "O"){
 				rowO++;
-			}
-			if (gridArray[j][i] == "X"){
+			}	if (gridArray[j][i] == "X"){
 				colX++;				
+			}	else if (gridArray[j][i] == "O"){
+				colO++; 					
+			} else if (j==2){
+				if (rowX == 3 || colX == 3){
+					alert("X wins!!");
+				} else if (rowO == 3 || colO == 3){
+					alert("O wins!!");
+				}
 			}
-			if (gridArray[j][i] == "O"){
-				colO++;
-			}		
-			else if (rowX == 3 || colX == 3){
-				alert("X wins!!");
-			}
-			else if (rowO == 3 || colO == 3){
-				alert("O wins!!");
-			}
-		}		
+		}	
 	}
 }
 
@@ -169,11 +182,15 @@ $(document).ready(function(){
 	}
 	
 	$(".blank").click(function(){
-		this.classList.remove("blank");
-		this.classList.add("X");
-		gridArray[xIndex(this.id)][yIndex(this.id)] = "X";
-		console.log(gridArray);
-		gameOver();
-		computerTurn();
+		if ($(this).hasClass("blank")){
+			this.classList.remove("blank");
+			this.classList.add("X");
+			gridArray[xIndex(this.id)][yIndex(this.id)] = "X";
+			gameOver();
+
+			//obviously uncomment this to see the computer play against you
+			//computerTurn();
+			//gameOver();
+		}
 	}) 
 });
