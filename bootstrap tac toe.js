@@ -3,6 +3,11 @@ This jQuery builds and runs a simple tic tac toe game for bootstrap html and css
 */
 var gridArray = [[0,0,0],[0,0,0],[0,0,0]];
 var highPriArray = [[0,"O","O"],["O",0,"O"],["O","O",0],[0,"X","X"],["X",0,"X"],["X","X",0]];
+var gameState = 0;
+
+var xImg = "X-img.png";
+var oImg = "O-img.png";
+var blankImg = "blank.png";
 
 function compare(a,b) {
 	if (a === b) {
@@ -88,15 +93,22 @@ function computerMove(i,j) {
 	gridArray[i][j] = "O";
 	var divName = "square_"+i+"_"+j;
 	console.log(divName);
+	$("#"+divName).children("img").attr('src',oImg);
 	document.getElementById(divName).classList.remove("blank");
 	document.getElementById(divName).classList.add("O");
+	
 }
-// checks for win condition and displays alert
 
-//tay - this is where the problem is, there seems to be some issue when it trys to do logic on the
-//diag and row/col arrays (on last loops of i and j).  im pretty sure all the loops are running from console.logging things
-//but the stuff dont work!
+// checks for win condition and displays alert
 function gameOver() {
+	//check for draw
+	var flatArray = gridArray[0].concat(gridArray[1],gridArray[2]);
+	console.log(flatArray);
+	if (flatArray.indexOf(0) == -1){
+		gameState = 1;
+		$('#drawModal').modal('show');
+	}
+	//check for win
 	//initialize diag counters 
 	var diag1X = 0;
 	var diag1O = 0;
@@ -119,12 +131,14 @@ function gameOver() {
 			diag2X++;
 		}	else if (gridArray[i][(2-i)] == "O"){
 			diag2O++;
-		}	else if (i == 2){
+		}	/* else */ if (i == 2){					
 			if (diag1X == 3 || diag2X == 3) {
-				alert("X wins!!");
+				gameState = 1;
+				$('#winModal').modal('show');
 			}
 			else if (diag1O == 3 || diag2O == 3) {
-				alert("O wins!!");
+				gameState = 1;
+				$('#loseModal').modal('show');
 			}
 		}
 		// count and check rows and columns for win
@@ -137,11 +151,13 @@ function gameOver() {
 				colX++;				
 			}	else if (gridArray[j][i] == "O"){
 				colO++; 					
-			} else if (j==2){
+			} /* else */if (j==2){					
 				if (rowX == 3 || colX == 3){
-					alert("X wins!!");
+					gameState = 1;
+					$('#winModal').modal('show');
 				} else if (rowO == 3 || colO == 3){
-					alert("O wins!!");
+					gameState = 1;
+					$('#loseModal').modal('show');
 				}
 			}
 		}	
@@ -162,6 +178,7 @@ function yIndex(squareDiv) {
 
 
 $(document).ready(function(){
+
 	// Create div Object and add id and class
 	for (var i=0; i<3; i++){
 		var rowDiv = document.createElement("div");
@@ -169,28 +186,36 @@ $(document).ready(function(){
 		
 		for (var j=0; j<3; j++){
 			var gridDiv = document.createElement("div");
-			var newContent = document.createTextNode( i + " " + j );
+			//var newContent = document.createTextNode( i + " " + j );
 			gridDiv.id = "square_" + i +"_"+ j;
 			gridDiv.classList.add("col-lg-4");
 			gridDiv.classList.add("col-sm-4");
+			gridDiv.classList.add("col-4");
 			gridDiv.classList.add("blank");
-			gridDiv.appendChild(newContent);
+			$('<img/>').attr('src',blankImg).addClass('img-responsive').appendTo(gridDiv);
+			//gridDiv.appendChild(newContent);
 			rowDiv.appendChild(gridDiv);
 		}
 		
 		document.getElementById("playarea").appendChild(rowDiv);
+		if (i<2){
+			$("<br>").appendTo(document.getElementById("playarea"));
+		}
 	}
 	
 	$(".blank").click(function(){
 		if ($(this).hasClass("blank")){
-			this.classList.remove("blank");
-			this.classList.add("X");
-			gridArray[xIndex(this.id)][yIndex(this.id)] = "X";
-			gameOver();
-
-			//obviously uncomment this to see the computer play against you
-			//computerTurn();
-			//gameOver();
+			if (gameState == 0){
+				this.classList.remove("blank");
+				this.classList.add("X");
+				$(this).children("img").attr('src',xImg);
+				gridArray[xIndex(this.id)][yIndex(this.id)] = "X";
+				gameOver();
+				if (gameState == 0) {
+					computerTurn();
+					gameOver();
+				}
+			}
 		}
-	}) 
+	})
 });

@@ -9,52 +9,103 @@
 
 
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
-	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<style type="text/css">
-		body { 
-			padding-top: 80px;
-			padding-bottom: 40px;
-		 }
-		 footer {
-		 	padding-top: 40px;
-		 }
-		.blank {
-			height:150px;
-		}
-		.X {
-			height:150px;
-			background-color: red;
-		}
-		.O {
-			height:150px;
-			background-color: blue;
-		}	
-	</style>
+	<link rel="stylesheet" href="bootstrap tac toe.css">
 
 	</head>
 	<body>
-		<div class="navbar navbar-fixed-top">
-		  <div class="container">
-		    <a class="navbar-brand" href="#">Bootstrap-Tac-
-		    	Toe</a>
-		  </div>
-		</div>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand">To-Do: Name</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Wanderlust Dance</a></li>
+                <li><a href="#">Bootstrap-Tac-Toe</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
 
 	<div class="container">
-		<p>site best viewed under 992px wide</p>
 		<div class="row">
-			<div id="playarea" class="col-sm-8 col-sm-offset-2" style="border: 10px solid black;">
+			<div class="col-12 col-sm-12 col-lg-12">
+				<h2>Bootstrap Tac Toe</h2>
+				<p class="lead">My first JavaScript project! A simple tic tac toe game made with JavaScript and the Bootstrap framework.  Human player goes first and plays as X's.</p> 
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-2 col-sm-2 col-lg-3 hidden-sm"></div>
+			<div id="playarea" class="col-12 col-sm-8 col-lg-6" style="background: black;">
 			</div>
 		</div>
-	</div>
-
+	
+		<hr>
 		<footer>
-			<p>Ryan & Taylor Juve   &nbsp&nbsp&nbsp July 2013</p>
+			<p>&copy Ryan Juve   &nbsp&nbsp&nbsp July 2013</p>
 		</footer>
 	</div>
+
+	<div class="modal fade" id="winModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">You Win!</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>coming soon: # of tries to win?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal fade" id="loseModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">You Lose...</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>coming soon: # of tries?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal fade" id="drawModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">Draw...</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>coming soon: # of tries?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<!-- Le javascript
 	================================================== -->
