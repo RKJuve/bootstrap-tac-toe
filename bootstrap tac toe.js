@@ -236,7 +236,7 @@ $(document).ready(function(){
 	createGame();	
 	incrementCounter();
 
-	$(document).on("click", ".blank", function(){
+	$(document).on("mousedown", ".blank", function(){
 		if ($(this).hasClass("blank")){
 			if (gameState == 0){
 				this.classList.remove("blank");
