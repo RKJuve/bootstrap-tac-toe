@@ -1,19 +1,17 @@
 #playarea {
+	margin-top:20px;
+	background-color: #222222;
 	padding: 0px;
 	box-shadow: 10px 10px 5px #888888;
 }
-
+#reset {
+	margin: auto auto;
+}
 .blank {
 	background: transparent;
 }
 .blank img:hover {
   outline: 5px outset gray;
-}
-
-.X {
-}
-		
-.O {
 }
 .modal-dialog{
 	padding-top: 150px;

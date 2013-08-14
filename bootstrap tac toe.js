@@ -2,8 +2,10 @@
 This jQuery builds and runs a simple tic tac toe game for bootstrap html and css 
 */
 var gridArray = [[0,0,0],[0,0,0],[0,0,0]];
-var highPriArray = [[0,"O","O"],["O",0,"O"],["O","O",0],[0,"X","X"],["X",0,"X"],["X","X",0]];
+var highPriWin = [[0,"O","O"],["O",0,"O"],["O","O",0]];
+var highPriBlock = [[0,"X","X"],["X",0,"X"],["X","X",0]];
 var gameState = 0;
+var gameAttempts = 0;
 
 var xImg = "X-img.png";
 var oImg = "O-img.png";
@@ -27,49 +29,58 @@ function compare(a,b) {
 
 function computerTurn() {
 	//check for possible wins/blocks HIGH PRIORITY
-	for (var i=0; i<3; i++){
-		//initialize counter arrays
-		if (i == 0){
-		var diag1 = [];
-		var diag2 = [];
-		}
-		var check1 = [];
-		var check2 = [];
-		//fill diag arrays with grid variables
-		diag1[i] = gridArray[i][i];			
-		diag2[i] = gridArray[i][2-i];
-		//check for wins/blocks in diag
-		if (i == 2) {
-			var array = [];
-			for (var k=0; k<highPriArray.length; k++){					
-				array = highPriArray[k];
-				if (compare(diag1,array)){	
-					computerMove(diag1.indexOf(0), diag1.indexOf(0));
-					return;
-				} else if (compare(diag2,array)){
-					computerMove(diag2.indexOf(0), (2-diag2.indexOf(0)));
-					return;
-				}
+	function arrayCheck(toCheck){
+		for (var i=0; i<3; i++){
+			//initialize counter arrays
+			if (i == 0){
+			var diag1 = [];
+			var diag2 = [];
 			}
-		}
-		// check for wins/blocks in rows and columns		
-		for (var j=0; j<3; j++){
-			check1[j] = gridArray[i][j];
-			check2[j] = gridArray[j][i];
-			if (j == 2){
+			var check1 = [];
+			var check2 = [];
+			//fill diag arrays with grid variables
+			diag1[i] = gridArray[i][i];			
+			diag2[i] = gridArray[i][2-i];
+			//check for wins/blocks in diag
+			if (i == 2) {
 				var array = [];
-				for (var k=0; k<highPriArray.length; k++){					
-					array = highPriArray[k];
-					if (compare(check1,array)){	
-						computerMove(i, check1.indexOf(0));
-						return;
-					} else if (compare(check2,array)){
-						computerMove(check2.indexOf(0), i);
-						return;
+				for (var k=0; k<toCheck.length; k++){					
+					array = toCheck[k];
+					if (compare(diag1,array)){	
+						computerMove(diag1.indexOf(0), diag1.indexOf(0));
+						return true;
+					} else if (compare(diag2,array)){
+						computerMove(diag2.indexOf(0), (2-diag2.indexOf(0)));
+						return true;
 					}
 				}
-			}		
+			}
+			// check for wins/blocks in rows and columns		
+			for (var j=0; j<3; j++){
+				check1[j] = gridArray[i][j];
+				check2[j] = gridArray[j][i];
+				if (j == 2){
+					var array = [];
+					for (var k=0; k<toCheck.length; k++){					
+						array = toCheck[k];
+						if (compare(check1,array)){	
+							computerMove(i, check1.indexOf(0));
+							return true;
+						} else if (compare(check2,array)){
+							computerMove(check2.indexOf(0), i);
+							return true;
+						}
+					}
+				}		
+			}
 		}
+		return false;
+	}
+	if (arrayCheck(highPriWin)){
+		return;
+	}
+	if (arrayCheck(highPriBlock)){
+		return;
 	}
 	//play in the middle if available
 	if (gridArray[1][1] == 0){
@@ -131,7 +142,7 @@ function gameOver() {
 			diag2X++;
 		}	else if (gridArray[i][(2-i)] == "O"){
 			diag2O++;
-		}	/* else */ if (i == 2){					
+		} if (i == 2){					
 			if (diag1X == 3 || diag2X == 3) {
 				gameState = 1;
 				$('#winModal').modal('show');
@@ -151,7 +162,7 @@ function gameOver() {
 				colX++;				
 			}	else if (gridArray[j][i] == "O"){
 				colO++; 					
-			} /* else */if (j==2){					
+			} if (j==2){					
 				if (rowX == 3 || colX == 3){
 					gameState = 1;
 					$('#winModal').modal('show');
@@ -176,10 +187,7 @@ function yIndex(squareDiv) {
 	return i;
 }
 
-
-$(document).ready(function(){
-
-	// Create div Object and add id and class
+function createGame(){
 	for (var i=0; i<3; i++){
 		var rowDiv = document.createElement("div");
 		rowDiv.classList.add("row");
@@ -202,8 +210,33 @@ $(document).ready(function(){
 			$("<br>").appendTo(document.getElementById("playarea"));
 		}
 	}
-	
-	$(".blank").click(function(){
+}
+
+function resetGame(){
+	gridArray = [[0,0,0],[0,0,0],[0,0,0]];
+	gameState = 0;
+	document.getElementById("playarea").innerHTML = '';
+	createGame();
+}
+
+function incrementCounter(condition){
+  if (condition == "reset"){
+		gameAttempts = 1;
+	}	else {
+		gameAttempts++;
+	}
+	var counters = document.getElementsByClassName("counter")
+	for (var i=0; i<counters.length; i++){
+		var count = counters[i];
+		count.innerHTML = gameAttempts;
+	}
+}
+
+$(document).ready(function(){
+	createGame();	
+	incrementCounter();
+
+	$(document).on("click", ".blank", function(){
 		if ($(this).hasClass("blank")){
 			if (gameState == 0){
 				this.classList.remove("blank");
@@ -217,5 +250,22 @@ $(document).ready(function(){
 				}
 			}
 		}
+	})
+	$("#drawModal").on('hide.bs.modal', function(){
+			incrementCounter();
+	});
+	$("#winModal").on('hide.bs.modal', function(){
+		incrementCounter("reset");
+	});
+	$("#loseModal").on('hide.bs.modal', function(){
+		incrementCounter();
+	});
+
+	$(".btn-reset").click(function(){
+		resetGame();
+	})
+	$(".btn-reset-user").click(function(){
+		incrementCounter();
+		resetGame();
 	})
 });
