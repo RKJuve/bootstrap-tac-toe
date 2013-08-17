@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<title>JuveRK's Code Vault - Bootstrap-Tac-Toe!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A simple tic-tac-toe game coded in Javascript and made shiny with Boostrap.">
+	<meta name="author" content="Ryan Juve">
+
+
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="bootstrap tac toe.css">
+
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand">JuveRK's Code Vault</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Wanderlust Dance</a></li>
+                <li><a href="#">Bootstrap-Tac-Toe</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-lg-12">
+				<h2>Bootstrap-Tac-Toe</h2>
+				<p class="lead">My first JavaScript project! A simple tic-tac-toe game made with JavaScript and the Bootstrap framework.  Currently the human player goes first and plays as X's, the option to randomise the starting player is in the works. In certain situations the computer plays randomly, with the intent of providing variety since tic-tac-toe is a <a href="https://en.wikipedia.org/wiki/Solved_game">solved game</a>.</p> 
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12 col-sm-2 col-lg-3 text-center">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-lg-12 hidden-sm" style="height: 200px; padding-top:45%;"><h4>Attempt: <span class="counter"></span></h4></div>
+					<div class="col-6 visible-sm"><h4>Attempt: <span class="counter"></span></h4></div>
+					<button type="button" class="btn btn-primary btn-reset-user">Reset Game</button>	
+				</div>			
+			</div>
+			<div id="playarea" class="col-12 col-sm-8 col-lg-6">
+			</div>
+		</div>
+	
+		<hr>
+		<footer>
+			<p>&copy Ryan Juve   &nbsp&nbsp&nbsp July 2013</p>
+		</footer>
+	</div>
+
+	<div class="modal fade" id="winModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">You Win!</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Only took <span class="counter"></span> tries!</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary btn-reset" data-dismiss="modal">Play Again</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal fade" id="loseModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">You Lose...</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>That's <span class="counter"></span> attempts. Keep trying!</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary btn-reset" data-dismiss="modal">Try Again</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="modal fade" id="drawModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title text-center">Draw...</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p><span class="counter"></span> down, how many more to win?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary btn-reset" data-dismiss="modal">Try Again</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- Le javascript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>	
+	<script type="text/javascript" src="bootstrap tac toe.js"></script>
+	</body>
+</html>
